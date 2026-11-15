@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notas de Tradução – MangaPT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --azul: #1a3a5c;
+      --azul-light: #2e6da4;
+      --azul-pale: #c8ddf0;
+      --azul-deep: #0d2135;
+      --creme: #f5efe6;
+      --creme-dk: #e8dfce;
+      --ocre: #c8955a;
+      --ocre-dark: #9b6a32;
+      --tile-white: #f0eee9;
+      --testo: #1c1812;
+      --testo-mid: #4a3f35;
+      --ombra: rgba(26, 58, 92, 0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--creme);
+      background-image:
+        linear-gradient(90deg, rgba(26,58,92,0.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(26,58,92,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      color: var(--testo);
+      overflow-x: hidden;
+    }
+
+    /* ── AZULEJO BAR ── */
+    .tile-bar {
+      height: 14px;
+      background: repeating-linear-gradient(90deg,
+        var(--azul) 0, var(--azul) 18px,
+        var(--azul-pale) 18px, var(--azul-pale) 36px,
+        var(--ocre) 36px, var(--ocre) 54px,
+        var(--tile-white) 54px, var(--tile-white) 72px);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 70px;
+      background: rgba(26, 58, 92, 0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--ocre);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.5rem;
+      color: var(--tile-white); letter-spacing: 0.04em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--ocre); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--azul-pale); text-decoration: none;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--ocre); transition: width 0.35s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ocre); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 26px; height: 2px; background: var(--tile-white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 1.2rem; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none; position: fixed; top: 70px; left: 0; right: 0;
+        background: var(--azul); flex-direction: column; gap: 0;
+        border-bottom: 2px solid var(--ocre); box-shadow: 0 8px 24px var(--ombra);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .nav-links a::after { display: none; }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background-color: var(--azul);
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      color: var(--tile-white);
+      text-align: center; padding: 3.5rem 2rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '翻訳 訳 注 訳 翻訳 注 翻訳 訳 注';
+      position: absolute; bottom: -8px; left: 0; right: 0;
+      font-size: 5rem; opacity: 0.06; letter-spacing: 10px;
+      line-height: 1; white-space: nowrap; overflow: hidden;
+    }
+    .header-eyebrow {
+      font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--ocre); margin-bottom: 1rem; position: relative;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(2.2rem, 4vw, 3.4rem); position: relative; line-height: 1.15;
+    }
+    .page-header h1 em { font-style: italic; color: var(--ocre); }
+    .page-header p {
+      font-style: italic; color: var(--azul-pale);
+      margin-top: 0.8rem; position: relative; font-size: 1.1rem;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      max-width: 1100px; margin: 3rem auto 5rem; padding: 0 2rem;
+      display: flex; gap: 2.4rem; align-items: flex-start;
+    }
+    .main-col { flex: 3; min-width: 0; }
+    .sidebar-col { flex: 1; min-width: 210px; }
+
+    /* ── SIDEBAR ── */
+    .sidebar-block {
+      background: #fff;
+      border: 2px solid var(--creme-dk);
+      border-top: 4px solid var(--azul);
+      box-shadow: 4px 4px 0 var(--creme-dk);
+      padding: 1.4rem;
+      margin-bottom: 1.4rem;
+      position: sticky; top: 90px;
+    }
+    .sidebar-block h3 {
+      font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--ocre-dark);
+      margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--creme-dk);
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 0.6rem; text-decoration: none;
+      color: var(--azul); font-size: 1rem; font-weight: 700;
+      padding: 0.65rem 0.5rem; border-bottom: 1px dashed var(--creme-dk);
+      transition: background 0.2s, color 0.2s, padding-left 0.2s;
+    }
+    .sidebar-link:last-child { border-bottom: none; }
+    .sidebar-link::before { content: '◆'; font-size: 0.6rem; color: var(--ocre); flex-shrink: 0; }
+    .sidebar-link:hover { background: var(--creme-dk); color: var(--azul-light); padding-left: 0.9rem; }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--azul); text-decoration: none; font-weight: 700;
+      font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 2rem; padding: 8px 0;
+      border-bottom: 2px solid transparent; transition: border-color 0.2s, color 0.2s;
+    }
+    .back-link:hover { border-color: var(--ocre); color: var(--ocre-dark); }
+
+    /* ── NOTE CARD ── */
+    .note-card {
+      background: #fff; border: 2px solid var(--creme-dk);
+      box-shadow: 5px 5px 0 var(--creme-dk);
+      margin-bottom: 2.2rem; overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .note-card:hover { box-shadow: 7px 7px 0 var(--ocre); transform: translate(-2px, -2px); }
+
+    .note-header {
+      background: var(--azul); color: var(--tile-white);
+      padding: 1.1rem 1.6rem; display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .note-number {
+      background: var(--ocre); color: var(--azul-deep);
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.9rem;
+      border-radius: 50%; width: 34px; height: 34px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .note-jp { font-size: 1.2rem; line-height: 1.6; font-family: 'Noto Serif JP', serif; }
+    .note-jp small {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem; opacity: 0.65; margin-top: 4px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    /* Portuguese band */
+    .note-pt {
+      background: var(--azul-light); color: #fff;
+      padding: 1rem 1.6rem 1rem 4.2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-style: italic; line-height: 1.55;
+      border-top: 2px solid var(--azul); border-bottom: 2px solid var(--azul);
+      position: relative;
+    }
+    .note-pt::before {
+      content: '🇵🇹'; position: absolute; left: 1.4rem; top: 50%;
+      transform: translateY(-50%); font-size: 1.3rem; font-style: normal;
+    }
+
+    .toggle-btn {
+      background: none; border: none; color: var(--azul); cursor: pointer;
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700;
+      padding: 0.8rem 1.6rem; width: 100%; text-align: left;
+      border-top: 1px solid var(--creme-dk);
+      display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s;
+    }
+    .toggle-btn:hover { background: var(--creme); }
+    .toggle-btn .arrow { font-size: 0.7rem; margin-left: auto; }
+
+    .note-body { display: none; padding: 1.4rem 1.6rem; }
+    .note-body.open { display: block; }
+    .breakdown-title {
+      font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--ocre-dark);
+      margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--creme-dk);
+    }
+
+    .word-row {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 0.4rem 1.2rem; margin-bottom: 0.9rem; align-items: start;
+    }
+    .word-pt {
+      font-weight: 700; color: var(--azul);
+      font-family: 'Playfair Display', serif; font-size: 1rem; line-height: 1.4; padding-top: 2px;
+    }
+    .word-desc { font-size: 1.02rem; line-height: 1.75; color: var(--testo); }
+    .word-desc .jp-ref { font-style: italic; color: var(--testo-mid); opacity: 0.8; font-size: 0.95rem; }
+    .word-desc .grammar {
+      display: inline-block; background: var(--azul-pale); color: var(--azul);
+      font-size: 0.72rem; font-weight: 700; padding: 1px 8px; margin-left: 4px;
+      letter-spacing: 0.08em; text-transform: uppercase; vertical-align: middle;
+    }
+    .word-row + .word-row { border-top: 1px dashed var(--creme-dk); padding-top: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--azul-deep); color: var(--azul-pale);
+      text-align: center; padding: 2.5rem 1rem; font-size: 0.95rem;
+      border-top: 3px solid var(--ocre);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.3rem;
+      color: var(--tile-white); margin-bottom: 0.5rem;
+    }
+    .footer-logo span { color: var(--ocre); font-style: italic; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 0.8rem 0; flex-wrap: wrap; }
+    .footer-links a {
+      color: var(--ocre); text-decoration: none; font-size: 0.8rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 760px) {
+      .layout { flex-direction: column; }
+      .sidebar-col { width: 100%; }
+      .sidebar-block { position: static; }
+      .word-row { grid-template-columns: 1fr; gap: 0.2rem; }
+      .note-header { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Manga<span>PT</span></a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Início</a>
+    <a href="translation.html" class="active">Traduções</a>
+    <a href="blog.html">Blog</a>
+    <a href="gallery.html">Galeria</a>
+    <a href="contact.html">Contacto</a>
+  </div>
+</nav>
+
+<div class="tile-bar"></div>
+<div class="page-header">
+  <p class="header-eyebrow">Translation Log</p>
+  <h1>Notas de <em>Tradução</em></h1>
+  <p>Diálogo original → Tradução portuguesa + Análise gramatical</p>
+</div>
+<div class="tile-bar"></div>
+
+<div class="layout">
+
+  <!-- ── 左：メインコンテンツ ── -->
+  <div class="main-col">
+
+    <a class="back-link" href="index.html">← Início</a>
+
+    <!-- NOTE 0：小説翻訳 -->
+    <div class="note-card reveal">
+      <div class="note-header">
+        <div class="note-number">★</div>
+        <div class="note-jp">
+          「私の人生は、その瞬間から始まったような気がする。」
+          <small>小説翻訳 / Tradução literária</small>
+        </div>
+      </div>
+      <div class="note-pt">
+        「Parece-me que a minha vida começou nesse momento.」
+      </div>
+      <button class="toggle-btn open" onclick="toggleNote(this)">
+        <span>🔍 Análise das palavras e da gramática</span><span class="arrow">▲</span>
+      </button>
+      <div class="note-body open">
+        <div class="breakdown-title">Análise das palavras</div>
+        <div class="word-row">
+          <div class="word-pt">Parece-me</div>
+          <div class="word-desc">
+            「私には〜のように思える」<br>
+            動詞 <em>parecer</em>（〜のように思われる）＋ 間接目的語代名詞 <em>me</em>（私に）。<br>
+            ヨーロッパ・ポルトガル語では代名詞が動詞の後ろにハイフンでつく（<em>enclítico</em>）のが基本。
+            <span class="grammar">presente do indicativo</span><br>
+            <span class="jp-ref">ブラジルでは <em>Me parece que ...</em> と動詞の前に置くことが多い。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">que</div>
+          <div class="word-desc">
+            「〜ということ」英語の that にあたる接続詞。
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">a minha vida</div>
+          <div class="word-desc">
+            <em>a</em> = 定冠詞（女性単数）／ <em>minha</em> = 私の ／ <em>vida</em> = 人生・命<br>
+            ポルトガル語では所有形容詞の前にも定冠詞を付けるのが普通。
+            <span class="grammar">artigo + possessivo</span><br>
+            <span class="jp-ref">イタリア語の <em>la mia esistenza</em> と同じ仕組み。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">começou</div>
+          <div class="word-desc">
+            <em>começar</em>（始まる）の3人称単数・完了過去。
+            <span class="grammar">pretérito perfeito simples</span><br>
+            <em>parecer que</em> が肯定のときは直説法を使うので、イタリア語（<em>pare che</em> ＋ 接続法）と違って <em>começou</em> のままでよい。<br>
+            <span class="jp-ref">否定（<em>Não me parece que ...</em>）になると接続法 <em>tenha começado</em> に変わる。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">nesse momento</div>
+          <div class="word-desc">
+            <em>nesse</em> = <em>em</em>（〜に）＋ <em>esse</em>（その）の縮約形。
+            <span class="grammar">contração</span><br>
+            <em>momento</em> = 瞬間
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE 1 -->
+    <div class="note-card reveal">
+      <div class="note-header">
+        <div class="note-number">1</div>
+        <div class="note-jp">
+          「よし！河童を捕まえて一攫千金目指すぞ！」
+          <small>Texto original / Diálogo japonês</small>
+        </div>
+      </div>
+      <div class="note-pt">
+        「Certo! Vou apanhar um kappa e fazer fortuna de uma vez só!」
+      </div>
+      <button class="toggle-btn open" onclick="toggleNote(this)">
+        <span>🔍 Análise das palavras e da gramática</span><span class="arrow">▲</span>
+      </button>
+      <div class="note-body open">
+        <div class="breakdown-title">Análise das palavras</div>
+        <div class="word-row">
+          <div class="word-pt">Certo!</div>
+          <div class="word-desc">
+            「よし！」に近い掛け声。<br>
+            <span class="jp-ref">直訳は「正しい」。英語の "Alright!" や "Okay!" に相当。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">Vou apanhar</div>
+          <div class="word-desc">
+            「捕まえるぞ」<br>
+            <em>ir</em>（行く）の現在形 <em>vou</em> ＋ 不定詞 <em>apanhar</em>（捕まえる）。
+            <span class="grammar">futuro perifrástico</span><br>
+            <span class="jp-ref">話し言葉では未来形 <em>apanharei</em> より <em>ir + 不定詞</em> が自然。ブラジルでは <em>pegar</em> もよく使う。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">um kappa</div>
+          <div class="word-desc">
+            「河童を」<br>
+            日本文化由来の語なので <em>kappa</em> とそのまま使うのが自然。<br>
+            <span class="jp-ref">必要なら <em>criatura lendária japonesa</em>（日本の伝説の生き物）と注記できる。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">e fazer fortuna</div>
+          <div class="word-desc">
+            「財を成す」<br>
+            <em>fazer fortuna</em> = 大金持ちになる（慣用表現）。<br>
+            <span class="jp-ref"><em>vou</em> が前の動詞にかかっているので、<em>fazer</em> も不定詞のままでよい。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">de uma vez só</div>
+          <div class="word-desc">
+            「一気に」「一攫千金」のニュアンス。<br>
+            <span class="jp-ref"><em>vez</em> = 回 ／ <em>só</em> = ただ〜だけ。「たった一度で」という感じ。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE 2 -->
+    <div class="note-card reveal">
+      <div class="note-header">
+        <div class="note-number">2</div>
+        <div class="note-jp">
+          「借金作ってなにしてるの？」
+          <small>Texto original / Diálogo japonês</small>
+        </div>
+      </div>
+      <div class="note-pt">
+        「Fizeste dívidas, mas o que é que estás a fazer?」
+      </div>
+      <button class="toggle-btn open" onclick="toggleNote(this)">
+        <span>🔍 Análise das palavras e da gramática</span><span class="arrow">▲</span>
+      </button>
+      <div class="note-body open">
+        <div class="breakdown-title">Análise das palavras</div>
+        <div class="word-row">
+          <div class="word-pt">Fizeste</div>
+          <div class="word-desc">
+            「〜した」
+            <span class="grammar">pretérito perfeito simples</span><br>
+            <em>fazer</em>（する・作る）の2人称単数（tu）の完了過去。<br>
+            <span class="jp-ref">主語 <em>tu</em> は動詞の活用でわかるので省略できる（pro-drop 言語）。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">dívidas</div>
+          <div class="word-desc">
+            「借金（を）」<br>
+            <em>dívida</em> = 借金・負債（複数形）。<br>
+            <span class="jp-ref"><em>fazer dívidas</em> で「借金を作る」の決まった言い方。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">mas</div>
+          <div class="word-desc">
+            「でも」「それなのに」<br>
+            呆れや非難のニュアンスを出すために補った接続詞。
+            <span class="grammar">conjunção adversativa</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">o que é que</div>
+          <div class="word-desc">
+            「いったい何を」<br>
+            <em>o que</em>（何）＋ <em>é que</em>（強調）。疑問を強める口語的な形。
+            <span class="grammar">expressão de realce</span><br>
+            <span class="jp-ref">フランス語の <em>est-ce que</em> に近い働き。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">estás a fazer</div>
+          <div class="word-desc">
+            「〜しているところ」
+            <span class="grammar">estar a + infinitivo</span><br>
+            <em>estás</em> = <em>estar</em> の2人称単数 ＋ <em>a</em> ＋ 不定詞 <em>fazer</em>。<br>
+            <span class="jp-ref">ヨーロッパ式。ブラジルでは <em>você está fazendo</em>（estar + gerúndio）になる。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE 3 -->
+    <div class="note-card reveal">
+      <div class="note-header">
+        <div class="note-number">3</div>
+        <div class="note-jp">
+          「あんたなんか人間じゃない」
+          <small>Texto original / Diálogo japonês</small>
+        </div>
+      </div>
+      <div class="note-pt">
+        「Nem sequer és humano.」
+      </div>
+      <button class="toggle-btn open" onclick="toggleNote(this)">
+        <span>🔍 Análise das palavras e da gramática</span><span class="arrow">▲</span>
+      </button>
+      <div class="note-body open">
+        <div class="breakdown-title">Análise das palavras</div>
+        <div class="word-row">
+          <div class="word-pt">Nem sequer</div>
+          <div class="word-desc">
+            「〜ですらない」「〜さえない」
+            <span class="grammar">locução adverbial</span><br>
+            <em>nem</em>（〜も〜ない）＋ <em>sequer</em>（せめて）。否定を強める定型表現。
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">és</div>
+          <div class="word-desc">
+            「あなたは〜である」<br>
+            動詞 <em>ser</em> の2人称単数・現在形。
+            <span class="grammar">presente do indicativo</span><br>
+            <span class="jp-ref">文頭に <em>nem sequer</em> があるので、別の否定語 <em>não</em> は要らない。</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">humano</div>
+          <div class="word-desc">
+            「人間の／人間」
+            <span class="grammar">adjetivo / substantivo</span>
+          </div>
+        </div>
+        <div class="word-row">
+          <div class="word-pt">⚠️ Tu を省いた理由</div>
+          <div class="word-desc">
+            主語 <em>Tu</em> を入れると <em>Tu nem sequer és humano</em> となり、攻撃性がさらに強まる。<br>
+            <span class="jp-ref">ポルトガル語も主語省略が自然。原文の「あんたなんか」の軽蔑感は <em>nem sequer</em> で出している。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 追加ノートはここにコピペで増やす -->
+
+  </div><!-- /main-col -->
+
+  <!-- ── 右：サイドバー ── -->
+  <aside class="sidebar-col">
+    <div class="sidebar-block">
+      <h3>📂 メニュー</h3>
+      <a class="sidebar-link" href="grammar.html">文法ノート</a>
+      <a class="sidebar-link" href="novel.html">小説翻訳</a>
+      <a class="sidebar-link" href="studyblog.html">勉強のひとことブログ</a>
+      <a class="sidebar-link" href="dictionary.html">辞書</a>
+    </div>
+  </aside>
+
+</div><!-- /layout -->
+
+<footer>
+  <div class="footer-logo">Manga<span>PT</span></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="translation.html">Traduções</a>
+    <a href="blog.html">Blog</a>
+    <a href="gallery.html">Galeria</a>
+    <a href="contact.html">Contacto</a>
+  </div>
+  <p style="opacity:.6; font-size:.85rem;">© 2026 MangaPT. Feito com ♥ em português.</p>
+</footer>
+
+<script>
+  function toggleNote(btn) {
+    const body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.querySelector('.arrow').textContent = body.classList.contains('open') ? '▲' : '▼';
+  }
+
+  const hbBtn   = document.getElementById('navHamburger');
+  const hbLinks = document.getElementById('navLinks');
+  hbBtn.addEventListener('click', () => {
+    hbBtn.classList.toggle('open');
+    hbLinks.classList.toggle('open');
+  });
+  hbLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hbBtn.classList.remove('open');
+      hbLinks.classList.remove('open');
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
