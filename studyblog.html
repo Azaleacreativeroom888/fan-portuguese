@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>勉強のひとことブログ – MangaPT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --azul: #1a3a5c;
+      --azul-light: #2e6da4;
+      --azul-pale: #c8ddf0;
+      --azul-deep: #0d2135;
+      --creme: #f5efe6;
+      --creme-dk: #e8dfce;
+      --ocre: #c8955a;
+      --ocre-dark: #9b6a32;
+      --tile-white: #f0eee9;
+      --testo: #1c1812;
+      --testo-mid: #4a3f35;
+      --ombra: rgba(26, 58, 92, 0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--creme);
+      background-image:
+        linear-gradient(90deg, rgba(26,58,92,0.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(26,58,92,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      color: var(--testo);
+      overflow-x: hidden;
+    }
+
+    /* ── AZULEJO BAR ── */
+    .tile-bar {
+      height: 14px;
+      background: repeating-linear-gradient(90deg,
+        var(--azul) 0, var(--azul) 18px,
+        var(--azul-pale) 18px, var(--azul-pale) 36px,
+        var(--ocre) 36px, var(--ocre) 54px,
+        var(--tile-white) 54px, var(--tile-white) 72px);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 70px;
+      background: rgba(26, 58, 92, 0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--ocre);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.5rem;
+      color: var(--tile-white); letter-spacing: 0.04em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--ocre); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--azul-pale); text-decoration: none;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--ocre); transition: width 0.35s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ocre); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 26px; height: 2px; background: var(--tile-white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 1.2rem; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none; position: fixed; top: 70px; left: 0; right: 0;
+        background: var(--azul); flex-direction: column; gap: 0;
+        border-bottom: 2px solid var(--ocre); box-shadow: 0 8px 24px var(--ombra);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .nav-links a::after { display: none; }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background-color: var(--azul);
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      color: var(--tile-white);
+      text-align: center; padding: 3.5rem 2rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '✍️ ✍️ ✍️ ✍️ ✍️ ✍️ ✍️ ✍️ ✍️ ✍️';
+      position: absolute; bottom: -6px; left: 0; right: 0;
+      font-size: 3.5rem; opacity: 0.06; white-space: nowrap; overflow: hidden;
+      letter-spacing: 14px; line-height: 1.6;
+    }
+    .header-eyebrow {
+      font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--ocre); margin-bottom: 1rem; position: relative;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', 'Noto Serif JP', serif; font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3rem); position: relative; line-height: 1.2;
+    }
+    .page-header p {
+      font-style: italic; color: var(--azul-pale);
+      margin-top: 0.8rem; position: relative; font-size: 1.1rem;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 780px; margin: 3rem auto 5rem; padding: 0 2rem;
+      display: flex; flex-direction: column; gap: 1.4rem;
+    }
+
+    /* ── ENTRY CARD ── */
+    .entry-card {
+      background: #fff;
+      border: 2px solid var(--azul);
+      box-shadow: 5px 5px 0 var(--creme-dk);
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.18s;
+      animation: fadeUp 0.4s ease both;
+    }
+    .entry-card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ocre); }
+    .entry-card:nth-of-type(1) { animation-delay: 0.05s; }
+    .entry-card:nth-of-type(2) { animation-delay: 0.10s; }
+    .entry-card:nth-of-type(3) { animation-delay: 0.15s; }
+    .entry-card:nth-of-type(4) { animation-delay: 0.20s; }
+    .entry-card:nth-of-type(5) { animation-delay: 0.25s; }
+    .entry-card:nth-of-type(6) { animation-delay: 0.30s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .entry-header {
+      background: var(--ocre);
+      border-bottom: 2px solid var(--azul);
+      padding: 9px 18px; display: flex; align-items: center;
+    }
+    .entry-date {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--azul-deep);
+    }
+
+    .entry-body { padding: 1.2rem 1.4rem 1.4rem; }
+    .entry-body p { font-size: 1.12rem; line-height: 1.85; color: var(--testo); }
+    .entry-body strong { color: var(--azul-light); font-weight: 700; }
+
+    /* ── DIVIDER ── */
+    .section-divider { display: flex; align-items: center; gap: 12px; margin: 4px 0; }
+    .section-divider span {
+      font-family: 'Playfair Display', serif; font-size: 0.9rem;
+      color: var(--ocre-dark); opacity: 0.6; white-space: nowrap;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ''; flex: 1; height: 2px;
+      background: repeating-linear-gradient(90deg,
+        var(--azul) 0, var(--azul) 6px, transparent 6px, transparent 12px);
+      opacity: 0.2;
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--azul); text-decoration: none; font-weight: 700;
+      font-size: 0.95rem; letter-spacing: 0.06em; padding: 8px 0;
+      border-bottom: 2px solid transparent; transition: border-color 0.2s, color 0.2s;
+      align-self: flex-start;
+    }
+    .back-link:hover { border-color: var(--ocre); color: var(--ocre-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--azul-deep); color: var(--azul-pale);
+      text-align: center; padding: 2.5rem 1rem; font-size: 0.95rem;
+      border-top: 3px solid var(--ocre);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.3rem;
+      color: var(--tile-white); margin-bottom: 0.5rem;
+    }
+    .footer-logo span { color: var(--ocre); font-style: italic; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 0.8rem 0; flex-wrap: wrap; }
+    .footer-links a {
+      color: var(--ocre); text-decoration: none; font-size: 0.8rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Manga<span>PT</span></a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Início</a>
+    <a href="translation.html" class="active">Traduções</a>
+    <a href="blog.html">Blog</a>
+    <a href="gallery.html">Galeria</a>
+    <a href="contact.html">Contacto</a>
+  </div>
+</nav>
+
+<div class="tile-bar"></div>
+<div class="page-header">
+  <p class="header-eyebrow">Study Notes</p>
+  <h1>✍️ 勉強のひとことブログ</h1>
+  <p>Apontamentos diários de estudo — 日々の勉強メモ</p>
+</div>
+<div class="tile-bar"></div>
+
+<div class="container">
+
+  <a class="back-link" href="translation.html">← Traduções に戻る</a>
+
+  <div class="entry-card">
+    <div class="entry-header">
+      <span class="entry-date">2026 · 09 · 20</span>
+    </div>
+    <div class="entry-body">
+      <p>ニューエクスプレスは第８課までなんとなく分かるようになったけど、それ以上が難しい。ちょっと長くなると途端に分からなくなる。</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>◆</span></div>
+
+  <div class="entry-card">
+    <div class="entry-header">
+      <span class="entry-date">2026 · 04 · 22</span>
+    </div>
+    <div class="entry-body">
+      <p>Turns out if you translate a gag with too much energy, it gets rejected. So what's the "safe zone" for comedy? I'm not sure there is one — but I want to slowly get better at landing the joke without losing the punch.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>◆</span></div>
+
+  <div class="entry-card">
+    <div class="entry-header">
+      <span class="entry-date">2026 · 04 · 21</span>
+    </div>
+    <div class="entry-body">
+      <p>Personally, I feel like <strong>「あんたなんか人間じゃない」</strong> is best captured as <strong>"You are a monster."</strong> — it carries the same emotional weight without being too literal.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>◆</span></div>
+
+  <div class="entry-card">
+    <div class="entry-header">
+      <span class="entry-date">2026 · 04 · 20</span>
+    </div>
+    <div class="entry-body">
+      <p>Still wrestling with how to translate <strong>"indeed"</strong> and <strong>"How iconic"</strong> naturally. For now, the plan is to just do a lot of practice translations and focus on speed without dropping quality — improvement comes with reps.</p>
+    </div>
+  </div>
+
+  <!-- 追加エントリーはここにコピペで増やす -->
+  <!--
+  <div class="section-divider"><span>◆</span></div>
+  <div class="entry-card">
+    <div class="entry-header">
+      <span class="entry-date">2026 · MM · DD</span>
+    </div>
+    <div class="entry-body">
+      <p>日記の内容をここに書く。</p>
+    </div>
+  </div>
+  -->
+
+</div>
+
+<footer>
+  <div class="footer-logo">Manga<span>PT</span></div>
+  <div class="footer-links">
+    <a href="index.html">Início</a>
+    <a href="translation.html">Traduções</a>
+    <a href="blog.html">Blog</a>
+    <a href="gallery.html">Galeria</a>
+    <a href="contact.html">Contacto</a>
+  </div>
+  <p style="opacity:.6; font-size:.85rem;">© 2026 MangaPT. Feito com ♥ em português.</p>
+</footer>
+
+<script>
+  const btn   = document.getElementById('navHamburger');
+  const links = document.getElementById('navLinks');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      btn.classList.remove('open');
+      links.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
